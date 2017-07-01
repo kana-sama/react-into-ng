@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible"
+        content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet"
+        href="styles.css">
+</head>
+
+<body>
+  <div ng-app="react-into-ng-app"
+       ng-controller="main-controller">
+    <h1>Documents</h1>
+    <ul class="docs">
+      <li ng-repeat="doc in docs"
+          ng-bind="doc.name"
+          class="docs__item"
+          ng-class="{'docs__item--selected': isDocSelected(doc)}"
+          ng-click="toggleDocSelection(doc)">
+      </li>
+    </ul>
+    <div ng-if="selectedDocID != null">
+      <button ng-click="toggleDiscussion()">
+        <span ng-if="isChatterOpen">Hide</span>
+        <span ng-if="!isChatterOpen">Show</span>
+        discussions for
+        "<span ng-bind="docs[selectedDocID].name"></span>"
+      </button>
+      <chatter ng-if="isChatterOpen"
+               topic="selectedDocID" />
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ngreact/0.4.1/ngReact.js"></script>
+
+  <script src="chatter.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
