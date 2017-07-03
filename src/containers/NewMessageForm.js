@@ -29,9 +29,6 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   withState("text", "setText", ""),
   withState("authorID", "setAuthorID", prop("defaultAuthorID")),
-  withProps(({ text }) => ({
-    canSubmit: !isEmpty(text.trim())
-  })),
   withHandlers({
     onAuthorIDChange: ({ setAuthorID }) => event => {
       setAuthorID(event.target.value);

@@ -5,41 +5,52 @@ import MediaObject from "./MediaObject";
 import Input from "./Input";
 import Select from "./Select";
 import Button from "./Button";
+import FormControl from "./FormControl";
 
 const NewMessageForm = ({
   users,
   authorID,
   text,
   isDisabled,
-  canSubmit,
   onAuthorIDChange,
   onTextChange,
   onSubmit
-}) =>
-  <MediaObject title="New message">
-    <form onSubmit={onSubmit}>
-      <Select
-        value={authorID}
-        onChange={onAuthorIDChange}
-        disabled={isDisabled}
-      >
-        {users.map(({ id, name }) =>
-          <option key={id} value={id}>
-            {name}
-          </option>
-        )}
-      </Select>
-      <Input
-        placeholder="Text"
-        value={text}
-        onChange={onTextChange}
-        disabled={isDisabled}
-      />
-      <Button type="submit" disabled={isDisabled || !canSubmit}>
-        Post message
-      </Button>
-    </form>
-  </MediaObject>;
+}) => {
+  const canSubmit = authorID && text.trim().length > 0;
+
+  return (
+    <MediaObject title="New message">
+      <form onSubmit={onSubmit}>
+        <FormControl label="Author">
+          <Select
+            value={authorID}
+            onChange={onAuthorIDChange}
+            disabled={isDisabled}
+          >
+            {users.map(({ id, name }) =>
+              <option key={id} value={id}>
+                {name}
+              </option>
+            )}
+          </Select>
+        </FormControl>
+        <FormControl label="Text">
+          <Input
+            placeholder="Text"
+            value={text}
+            onChange={onTextChange}
+            disabled={isDisabled}
+          />
+        </FormControl>
+        <FormControl>
+          <Button type="submit" disabled={isDisabled || !canSubmit}>
+            Post message
+          </Button>
+        </FormControl>
+      </form>
+    </MediaObject>
+  );
+};
 
 NewMessageForm.propTypes = {
   users: arrayOf(
@@ -50,7 +61,6 @@ NewMessageForm.propTypes = {
   ).isRequired,
   authorID: number.isRequired,
   text: string.isRequired,
-  canSubmit: bool.isRequired,
   onAuthorIDChange: func.isRequired,
   onTextChange: func.isRequired,
   onSubmit: func.isRequired

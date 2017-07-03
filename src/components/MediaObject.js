@@ -7,14 +7,12 @@ import CardBody from "./CardBody";
 
 const MediaObject = ({ title, children }) =>
   <Card>
-    {title &&
-      <CardTitle>
-        {title}
-      </CardTitle>}
-    {children &&
-      <CardBody>
-        {children}
-      </CardBody>}
+    <CardTitle>
+      {title}
+    </CardTitle>
+    <CardBody>
+      {children}
+    </CardBody>
   </Card>;
 
 MediaObject.propTypes = {

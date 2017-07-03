@@ -17,7 +17,11 @@ const mapStateToProps = (state, props) => {
 
   return {
     title: author.name,
-    children: text
+    children: (
+      <p>
+        {text}
+      </p>
+    )
   };
 };
 
