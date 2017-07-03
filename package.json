@@ -18,12 +18,10 @@
     "babel-preset-stage-2": "^6.24.1",
     "regenerator-runtime": "^0.10.5",
     "webpack": "^3.0.0",
-    "webpack-bundle-analyzer": "^2.8.2",
     "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-dev-server": "^2.5.0"
   },
   "dependencies": {
-    "babel-polyfill": "^6.23.0",
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
