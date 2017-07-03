@@ -4,7 +4,7 @@ import createSagaMiddleware from "redux-saga";
 import reducer from "./reducer";
 import saga from "./saga";
 
-export default function() {
+export default function createDiscussionsStore() {
   const reduxDevtoolsMiddleware = window.__REDUX_DEVTOOLS_EXTENSION__;
   const sagaMiddleware = createSagaMiddleware();
 
