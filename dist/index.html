@@ -26,13 +26,13 @@
     </ul>
     <div ng-if="selectedDocID != null">
       <button ng-click="toggleDiscussion()">
-        <span ng-if="isChatterOpen">Hide</span>
-        <span ng-if="!isChatterOpen">Show</span>
+        <span ng-if="areDiscussionsShown">Hide</span>
+        <span ng-if="!areDiscussionsShown">Show</span>
         discussions for
         "<span ng-bind="docs[selectedDocID].name"></span>"
       </button>
-      <chatter ng-if="isChatterOpen"
-               topic="selectedDocID" />
+      <discussions ng-if="areDiscussionsShown"
+                   doc="selectedDocID" />
     </div>
   </div>
 
@@ -41,7 +41,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ngreact/0.4.1/ngReact.js"></script>
 
-  <script src="chatter.js"></script>
+  <script src="discussions.js"></script>
   <script src="app.js"></script>
 </body>
 

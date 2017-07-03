@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export default styled.h4`
-  font-size: 24px;
+  font-size: 18px;
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 `;

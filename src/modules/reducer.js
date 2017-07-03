@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
-import messages from "./messages/reducer";
-import topic from "./topic/reducer";
+import entities from "./entities/reducer";
+import doc from "./doc/reducer";
+import errors from "./errors/reducer";
 
 export default combineReducers({
-  messages,
-  topic
+  entities,
+  doc,
+  errors
 });

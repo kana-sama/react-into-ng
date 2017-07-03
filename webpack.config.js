@@ -2,11 +2,10 @@ const path = require("path");
 
 module.exports = {
   entry: ["babel-polyfill", "./src/index.js"],
-  watch: true,
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "chatter.js",
-    library: "Chatter"
+    filename: "discussions.js",
+    library: "Discussions"
   },
   module: {
     rules: [{ test: /\.js$/, use: "babel-loader" }]

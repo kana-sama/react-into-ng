@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 
-import createChatterStore from "./modules/store";
-import { setTopic } from "./modules/topic/actions";
+import createStore from "./modules/createStore";
+import { setDoc } from "./modules/doc/actions";
 
-import Chat from "./containers/Chat";
+import App from "./containers/App";
 
-export default class ChatterApp extends Component {
+export default class DiscussionsEntryPoint extends Component {
   componentWillMount() {
-    this.store = createChatterStore();
-    this.store.dispatch(setTopic(this.props.topic));
+    this.store = createStore();
+    this.store.dispatch(setDoc(this.props.doc));
   }
 
   render() {
     return (
       <Provider store={this.store}>
-        <Chat />
+        <App />
       </Provider>
     );
   }

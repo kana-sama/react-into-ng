@@ -1,74 +1,50 @@
-import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { compose, withState, withHandlers } from "recompose";
+import { compose, withState, withHandlers, withProps } from "recompose";
+import { path, pipe, prop, head, keys, isEmpty } from "ramda";
 
-import { addMessage } from "../modules/messages/actions";
-import { getIsMessagePosting } from "../modules/messages/selectors";
+import { addMessage } from "../modules/entities/messages/actions";
+import { getIsMessagePosting } from "../modules/entities/messages/selectors";
 
-import Card from "../components/Card";
-import CardTitle from "../components/CardTitle";
-import CardBody from "../components/CardBody";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import {
+  getUsersList,
+  getFirstUserID
+} from "../modules/entities/users/selectors";
+
+import NewMessageForm from "../components/NewMessageForm";
+
+const mapStateToProps = createStructuredSelector({
+  isDisabled: getIsMessagePosting,
+  users: getUsersList,
+  defaultAuthorID: getFirstUserID
+});
+
+const mapDispatchToProps = dispatch => ({
+  addMessage(authorID, text) {
+    dispatch(addMessage(authorID, text));
+  }
+});
 
 const enhance = compose(
-  withState("author", "setAuthor", ""),
-  withState("message", "setMessage", ""),
+  connect(mapStateToProps, mapDispatchToProps),
+  withState("text", "setText", ""),
+  withState("authorID", "setAuthorID", prop("defaultAuthorID")),
+  withProps(({ text }) => ({
+    canSubmit: !isEmpty(text.trim())
+  })),
   withHandlers({
-    onAuthorChange: ({ setAuthor }) => event => {
-      setAuthor(event.target.value);
+    onAuthorIDChange: ({ setAuthorID }) => event => {
+      setAuthorID(event.target.value);
     },
-    onMessageChange: ({ setMessage }) => event => {
-      setMessage(event.target.value);
+    onTextChange: ({ setText }) => event => {
+      setText(event.target.value);
+    },
+    onSubmit: ({ addMessage, authorID, text, setText }) => event => {
+      event.preventDefault();
+      addMessage(authorID, text);
+      setText("");
     }
-  }),
-  connect(
-    createStructuredSelector({
-      isPosting: getIsMessagePosting
-    }),
-    (dispatch, { author, message, setMessage }) => ({
-      onSubmit(event) {
-        event.preventDefault();
-
-        if (author !== "" && message !== "") {
-          dispatch(addMessage(author, message));
-          setMessage("");
-        }
-      }
-    })
-  )
+  })
 );
-
-const NewMessageForm = ({
-  author,
-  message,
-  onAuthorChange,
-  onMessageChange,
-  onSubmit,
-  isPosting
-}) =>
-  <form onSubmit={onSubmit}>
-    <Card>
-      <CardTitle>New message</CardTitle>
-      <CardBody>
-        <Input
-          placeholder="Your nickname"
-          value={author}
-          onChange={onAuthorChange}
-          disabled={isPosting}
-        />
-        <Input
-          placeholder="Your message"
-          value={message}
-          onChange={onMessageChange}
-          disabled={isPosting}
-        />
-        <Button type="submit" disabled={isPosting}>
-          Post message
-        </Button>
-      </CardBody>
-    </Card>
-  </form>;
 
 export default enhance(NewMessageForm);

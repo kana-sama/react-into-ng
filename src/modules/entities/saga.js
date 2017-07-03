@@ -1,12 +1,12 @@
 import { all, fork } from "redux-saga/effects";
 
-import entities from "./entities/saga";
-import errors from "./errors/saga";
+import messages from "./messages/saga";
+import users from "./users/saga";
 
 export default function*() {
   // prettier-ignore
   yield all([
-    fork(entities),
-    fork(errors)
+    fork(messages),
+    fork(users)
   ]);
 }

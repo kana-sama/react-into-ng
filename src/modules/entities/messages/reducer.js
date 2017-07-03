@@ -1,25 +1,23 @@
 import { combineReducers } from "redux";
-import { pluck, assoc, append } from "ramda";
-
-import normalizeList from "../../utils/normalizeList";
+import { assoc, append, pluck, values } from "ramda";
 
 import {
-  FETCH_MESSAGES_REQUEST,
-  FETCH_MESSAGES_SUCCESS,
-  FETCH_MESSAGES_FAILURE,
-  ADD_MESSAGE_REQUEST,
-  ADD_MESSAGE_SUCCESS,
-  ADD_MESSAGE_FAILURE
+  MESSAGES_FETCH_REQUEST,
+  MESSAGES_FETCH_SUCCESS,
+  MESSAGES_FETCH_FAILURE,
+  MESSAGE_ADD_REQUEST,
+  MESSAGE_ADD_SUCCESS,
+  MESSAGE_ADD_FAILURE
 } from "./constants";
 
-function isFetching(state = false, action) {
+function areFetching(state = false, action) {
   switch (action.type) {
-    case FETCH_MESSAGES_REQUEST: {
+    case MESSAGES_FETCH_REQUEST: {
       return true;
     }
 
-    case FETCH_MESSAGES_SUCCESS:
-    case FETCH_MESSAGES_FAILURE: {
+    case MESSAGES_FETCH_SUCCESS:
+    case MESSAGES_FETCH_FAILURE: {
       return false;
     }
 
@@ -31,12 +29,12 @@ function isFetching(state = false, action) {
 
 function isPosting(state = false, action) {
   switch (action.type) {
-    case ADD_MESSAGE_REQUEST: {
+    case MESSAGE_ADD_REQUEST: {
       return true;
     }
 
-    case ADD_MESSAGE_SUCCESS:
-    case ADD_MESSAGE_FAILURE: {
+    case MESSAGE_ADD_SUCCESS:
+    case MESSAGE_ADD_FAILURE: {
       return false;
     }
 
@@ -48,13 +46,13 @@ function isPosting(state = false, action) {
 
 function ids(state = [], action) {
   switch (action.type) {
-    case FETCH_MESSAGES_SUCCESS: {
+    case MESSAGES_FETCH_SUCCESS: {
       const { messages } = action.payload;
 
-      return pluck("id", messages);
+      return pluck("id", values(messages));
     }
 
-    case ADD_MESSAGE_SUCCESS: {
+    case MESSAGE_ADD_SUCCESS: {
       const { message: { id } } = action.payload;
 
       return append(id, state);
@@ -68,13 +66,13 @@ function ids(state = [], action) {
 
 function entities(state = {}, action) {
   switch (action.type) {
-    case FETCH_MESSAGES_SUCCESS: {
+    case MESSAGES_FETCH_SUCCESS: {
       const { messages } = action.payload;
 
-      return normalizeList(messages);
+      return messages;
     }
 
-    case ADD_MESSAGE_SUCCESS: {
+    case MESSAGE_ADD_SUCCESS: {
       const { message } = action.payload;
 
       return assoc(message.id, message, state);
@@ -87,7 +85,7 @@ function entities(state = {}, action) {
 }
 
 export default combineReducers({
-  isFetching,
+  areFetching,
   isPosting,
   ids,
   entities

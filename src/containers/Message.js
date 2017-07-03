@@ -2,29 +2,23 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
 import {
-  getMessageAuthor,
+  getMessageAuthorID,
   getMessageText
-} from "../modules/messages/selectors";
+} from "../modules/entities/messages/selectors";
 
-import Card from "../components/Card";
-import CardTitle from "../components/CardTitle";
-import CardBody from "../components/CardBody";
+import { getUser } from "../modules/entities/users/selectors";
 
-const enhance = connect(
-  createStructuredSelector({
-    author: getMessageAuthor,
-    text: getMessageText
-  })
-);
+import MediaObject from "../components/MediaObject";
 
-const Message = ({ author, text }) =>
-  <Card>
-    <CardTitle>
-      {author}
-    </CardTitle>
-    <CardBody>
-      {text}
-    </CardBody>
-  </Card>;
+const mapStateToProps = (state, props) => {
+  const text = getMessageText(state, props);
+  const userID = getMessageAuthorID(state, props);
+  const author = getUser(state, { userID });
 
-export default enhance(Message);
+  return {
+    title: author.name,
+    children: text
+  };
+};
+
+export default connect(mapStateToProps)(MediaObject);

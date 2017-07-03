@@ -1,31 +1,31 @@
 import { createSelector } from "reselect";
-import { prop, reverse } from "ramda";
+import { path, prop, reverse } from "ramda";
 
-import getProps from "../utils/getProps";
+import getProps from "../../getProps";
 
 // Base selectors
 
-const getMessagesModule = prop("messages");
+const getMessagesRoot = path(["entities", "messages"]);
 
 // prettier-ignore
 export const getMessagesIDs = createSelector(
-  [getMessagesModule],
+  [getMessagesRoot],
   prop("ids")
 );
 
 // prettier-ignore
 export const getMessagesEntities = createSelector(
-  [getMessagesModule],
+  [getMessagesRoot],
   prop("entities")
 );
 
-export const getIsMessagesFetching = createSelector(
-  [getMessagesModule],
-  prop("isFetching")
+export const getAreMessagesFetching = createSelector(
+  [getMessagesRoot],
+  prop("areFetching")
 );
 
 export const getIsMessagePosting = createSelector(
-  [getMessagesModule],
+  [getMessagesRoot],
   prop("isPosting")
 );
 
@@ -49,7 +49,7 @@ export const getMessageText = createSelector(
 );
 
 // prettier-ignore
-export const getMessageAuthor = createSelector(
+export const getMessageAuthorID = createSelector(
   [getMessage],
-  prop("author")
+  prop("authorID")
 );
