@@ -10,21 +10,35 @@
 </head>
 
 <body>
-  <div ng-app="react-into-ng-app" ng-controller="main-controller">
-    <h1>Documents</h1>
-    <ul class="docs">
-      <li ng-repeat="doc in docs" ng-bind="doc.name" class="docs__item" ng-class="{'docs__item--selected': isDocSelected(doc)}"
-        ng-click="toggleDocSelection(doc)">
-      </li>
-    </ul>
-    <div ng-if="selectedDocID != null">
-      <button ng-click="toggleDiscussion()" class="doc-discussion">
-        <span ng-if="areDiscussionsShown">Hide</span>
-        <span ng-if="!areDiscussionsShown">Show</span>
-        discussions for
-        "<span ng-bind="docs[selectedDocID].name"></span>"
-      </button>
-      <discussions ng-if="areDiscussionsShown" doc="selectedDocID" />
+  <div class="area">
+    <div class="area__header">
+      AngularJS
+    </div>
+    <div class="area__content">
+      <div ng-app="react-into-ng-app" ng-controller="main-controller">
+        <h1>Documents</h1>
+        <ul class="docs">
+          <li ng-repeat="doc in docs" ng-bind="doc.name" class="docs__item" ng-class="{'docs__item--selected': isDocSelected(doc)}"
+            ng-click="toggleDocSelection(doc)">
+          </li>
+        </ul>
+        <div ng-if="selectedDocID != null">
+          <button ng-click="toggleDiscussion()" class="doc-discussion">
+            <span ng-if="areDiscussionsShown">Hide</span>
+            <span ng-if="!areDiscussionsShown">Show</span>
+            discussions for
+            "<span ng-bind="docs[selectedDocID].name"></span>"
+          </button>
+          <div class="area" ng-if="areDiscussionsShown">
+            <div class="area__header">
+              React
+            </div>
+            <div class="area__content">
+              <discussions doc="selectedDocID" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

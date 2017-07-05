@@ -16,7 +16,7 @@ const NewMessageForm = ({
   onTextChange,
   onSubmit
 }) => {
-  const canSubmit = authorID && text.trim().length > 0;
+  const canSubmit = text.trim().length > 0;
 
   return (
     <MediaObject title="New message">
