@@ -5,15 +5,13 @@ import reducer from "./reducer";
 import saga from "./saga";
 
 export default function createDiscussionsStore() {
-  const reduxDevtoolsMiddleware = window.__REDUX_DEVTOOLS_EXTENSION__;
   const sagaMiddleware = createSagaMiddleware();
+  const composeEnhancers =
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const store = createStore(
     reducer,
-    compose(
-      applyMiddleware(sagaMiddleware),
-      reduxDevtoolsMiddleware && reduxDevtoolsMiddleware()
-    )
+    composeEnhancers(applyMiddleware(sagaMiddleware))
   );
 
   sagaMiddleware.run(saga);

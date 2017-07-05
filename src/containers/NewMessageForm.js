@@ -31,7 +31,7 @@ const enhance = compose(
   withState("authorID", "setAuthorID", prop("defaultAuthorID")),
   withHandlers({
     onAuthorIDChange: ({ setAuthorID }) => event => {
-      setAuthorID(event.target.value);
+      setAuthorID(parseInt(event.target.value, 10));
     },
     onTextChange: ({ setText }) => event => {
       setText(event.target.value);
